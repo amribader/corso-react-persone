@@ -1,70 +1,37 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+# da imparare 
+css
 
-In the project directory, you can run:
+# REGOLE D' ORO
 
-### `yarn start`
+quando setto un valore con useState, sui valori array e oggetto, li passo sempre cosi
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+[...valori]
+{...oggetto}
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+ma se chiamo sort, o push del array, lo devo fare su una copia, se no modifica il valore originale
+esempio  persone.sort(ordinaPersone); --> persone qui ora ha gli elementi scambiati
 
-### `yarn test`
+Esempio con sort :
+const newPersone = [...persone].sort(ordinaPersone)
+[...persone] --> crea un clone, variabile indipendete (che punta non alla stessa memoria di persone), e fa il sort sul clone,
+persone rimane invariato. 
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Esempio con push
+persone.push(elemento) --> ora persone ha un elemento in più
+quindi potrei fare:
+const newPersone =  [...persone].push(elemento)
+ma se faccio console.log di newPersone, mi da il numero degli elementi di persone, perchè push restituisce l'indice del ultimo elemento inserito !! 
 
-### `yarn build`
+Quindi faccio cosi : 
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+const newPersone = [...persone];
+newPersone.push(elemento);
+  
+   non mi interessa il numero del utimo indice, push altera clonePersone e non persone,
+  ma per dare uniformità al codice si tende a non usare la funzione push, ma lo spread operator
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+const newPersone = [...persone, elemento]; accodo in questa forma, che mi da l'array nuovo allegando tutti i valori di persone, e come ultimo elemento elemento
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+vedi  https://ultimatecourses.com/blog/all-about-immutable-arrays-and-objects-in-javascript
