@@ -12,6 +12,8 @@ function Persone({ filtro }) {
     // il valore filtro viene passato esternamente
 
     const [persone, setPersone] = useState([...personeData]);
+    const [isTableVisible, setIsTableVisible] = useState(true);
+    const [orderField, setOrderField] = useState(true);
     // const [filtro, setFiltro] = useState('');
 
     const effectStart = () => {
@@ -32,6 +34,7 @@ function Persone({ filtro }) {
         const personeOrdinate = [...persone].sort(ordinaPersone); // capisco senza prendere il valore di ritorno che sort si applica su persone
 
         // NOTA BENE  personeOrdinate
+        setOrderField(field)
         setPersone([...personeOrdinate]);
     }
 
@@ -107,7 +110,11 @@ function Persone({ filtro }) {
                 <div>
                     <button onClick={() => handleReset()} >reset</button>
                 </div>
-                <table className="styled-table">
+                <div>
+                    <button onClick={() => setIsTableVisible(!isTableVisible)}>toggle table</button>
+                    {'  '} order by {orderField}
+                </div>
+                {isTableVisible && <table className="styled-table">
                     <thead>
                         <tr>
                             <th>id <button onClick={() => handleOrdina('id')} >Ordina</button> </th>
@@ -120,7 +127,7 @@ function Persone({ filtro }) {
                         {persone.map(renderPersone)}
                     </tbody>
 
-                </table>
+                </table>}
             </div>
         </div>
     );

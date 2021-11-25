@@ -6,6 +6,7 @@ import './App.css';
 
 function App() {
   const [filtro, setFiltro] = useState('');
+  const [isPersoneVisible, setIsPersoneVisible] = useState(true);
 
   const handleTextFilter = (event) => {
     const value = event.target.value;
@@ -14,16 +15,20 @@ function App() {
 
   console.log('sono dentro app');
 
-  useEffect(()=>{
+  useEffect(() => {
     console.log('compomnent APP pronto ');
-  } , []);
+  }, []);
 
   return (
     <div className="App">
-      <input onChange={handleTextFilter} />
-      {1 === 0 && <Comandi />}
-  
-      <Persone filtro={filtro} />
+      <div>
+        <button onClick={() => setIsPersoneVisible(!isPersoneVisible)}>toggle Persone</button>
+      </div>
+      <div>
+        <input onChange={handleTextFilter} />
+        {1 === 0 && <Comandi />}
+        {isPersoneVisible && <Persone filtro={filtro} />}
+      </div>
     </div>
   );
 }
