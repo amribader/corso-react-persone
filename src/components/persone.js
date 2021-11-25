@@ -9,6 +9,8 @@ import React, { useState, useEffect } from 'react';
 const ordinaStringhe = (a, b) => a < b ? -1 : a > b ? 1 : 0;
 
 function Persone({ filtro }) {
+    // il valore filtro viene passato esternamente
+
     const [persone, setPersone] = useState([...personeData]);
     // const [filtro, setFiltro] = useState('');
 
@@ -25,24 +27,32 @@ function Persone({ filtro }) {
 
     const handleOrdina = (field) => {
         const ordinaPersone = (a, b) => ordinaStringhe(a[field], b[field]);
+        // ATTENZIONE [...persone] , faccio il sort su una copia, in quanto sort altera la lista originale
+        // a differenza di map e filter , prova senza il clone (persone.sort) per vedere che "di blocca" al ultimo filtro
         const personeOrdinate = [...persone].sort(ordinaPersone); // capisco senza prendere il valore di ritorno che sort si applica su persone
-
-        // console.log('fff', personeOrdinate);
 
         // NOTA BENE  personeOrdinate
         setPersone([...personeOrdinate]);
     }
 
+    // value può essere di qualsiasi tipo, a noi ci interessa quando sono stringhe o numeri,
+    // diversamente restituisco false
     const filtraValues = (value, toFind) => (typeof value === 'string' || typeof value === 'number')  && (value + '').toLowerCase().indexOf(toFind.toLowerCase()) > -1;
 
     const handleFilter = () => {
         if (!filtro.trim()) return setPersone([...personeData]);
+
+        // Diversi metodi di filtrare 
+
+        // filtro per campi fissi
         const personeFiltrare2 = [...personeData].filter(persona =>
             filtraValues(persona.city, filtro)
             || filtraValues(persona.nome, filtro)
             || filtraValues(persona.natoIl, filtro)
         );
-
+    
+        // filtro su tutto l'oggetto , ma devo stare attento se i valori sono stringa
+        // vedi funzione filtraValue
         const personeFiltrare3 = [...personeData].filter(persona => {
             const keys = Object.keys(persona);
             for (let i = 0; i < keys.length; i++) {
